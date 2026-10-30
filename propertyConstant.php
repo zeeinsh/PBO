@@ -1,41 +1,35 @@
 <?php
-class produk {
+class Produk {
 
     public string $kode;
     public string $nama;
     public int $harga;
     public int $stok;
 
-    public const pajak = 0.11;
+    public const PAJAK = 0.11;
 
-    public function pajak() {
-        return self::pajak * 100;
+     public function __construct($kode, $nama, $harga, $stok) {
+        $this->kode = $kode;
+        $this->nama = $nama;
+        $this->harga = $harga;
+        $this->stok = $stok;
     }
 
-    public function total() {
-        return $this->harga + ($this->harga * self::pajak);
+    public function getPajakPersen(): float {
+        return self::PAJAK * 100;
+    }
+
+    public function getTotalHarga(): float {
+        return $this->harga + ($this->harga * self::PAJAK);
     }
 }
-    $produk = new produk();
-    $produk->kode = 'P0001';
-    $produk->nama = 'Laptop';
-    $produk->harga = '10000000';
-    $produk->stok = 5;
 
-    $pajak = produk::pajak * 100;
-    $jumlahPajak = $produk->harga * produk::pajak;
+$produk = new Produk('P0001', 'Laptop', 10000000, 5);
 
-    $total = $produk->harga + $jumlahPajak;
-
-    echo "Produk: ". $produk->nama;
-    echo "<br/>";
-    echo "Harga: ". $produk->harga;
-    echo "<br/>";
-    echo "Stok: ". $produk->stok;
-    echo "<br/>";
-    echo "Pajak: ". $pajak. "%";
-    echo "<br/>";
-    echo "Total harga setelah pajak: Rp". $total
-
-
+echo "Kode: " . $produk->kode . "<br/>";
+echo "Produk: " . $produk->nama . "<br/>";
+echo "Harga: Rp " . number_format($produk->harga, 0, ',', '.') . "<br/>";
+echo "Stok: " . $produk->stok . "<br/>";
+echo "Pajak: " . $produk->getPajakPersen() . "%<br/>";
+echo "Total harga setelah pajak: Rp " . number_format($produk->getTotalHarga(), 0, ',', '.');
 ?>
